@@ -14,4 +14,7 @@ kubectl get redis -n demo
 kubectl get pods -n demo
 ```
 
-A redis cluster is now running in namespace `demo`. Check [related documentation](https://kubedb.com/docs/v0.13.0-rc.0/guides/redis/clustering/redis-cluster/) to learn more about it.
+A redis cluster is now running in namespace `demo`.
+
+- Check [redis-operator documentation](https://kubedb.com/docs/v0.13.0-rc.0/guides/redis/) to discover all the features provided by the KubeDB operator.
+- Check [redis-cluster documentation](https://kubedb.com/docs/v0.13.0-rc.0/guides/redis/clustering/redis-cluster/) to learn more about using this redis instance.
