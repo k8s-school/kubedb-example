@@ -1,10 +1,16 @@
 #!/bin/bash
 
+# Install kubedb and then, a redis cluster
+
 set -euxo pipefail
 
-KUBEDB_VERSION="v0.13.0-rc.0"
+DIR=$(cd "$(dirname "$0")"; pwd -P)
 
-# See https://kubedb.com/docs/0.12.0/setup/install/
+KUBEDB_VERSION="v0.13.0-rc.0"
+NS="demo"
+
+
+# See https://kubedb.com/docs/v0.13.0-rc.0/setup/install/, but installer is broken
 curl -fsSL https://raw.githubusercontent.com/kubedb/installer/89fab34cf2f5d9e0bcc3c2d5b0f0599f94ff0dca/deploy/kubedb.sh | bash
 kubectl get pods -n kube-system | grep kubedb-operator
 
@@ -15,12 +21,14 @@ wget -O kubedb https://github.com/kubedb/cli/releases/download/$KUBEDB_VERSION/k
   && chmod +x kubedb \
   && sudo mv kubedb /usr/local/bin/
 
-# See https://kubedb.com/docs/v0.13.0-rc.0/guides/redis/quickstart/quickstart/
-kubectl create ns demo
+# See https://kubedb.com/docs/v0.13.0-rc.0/guides/redis/clustering/redis-cluster/
+
+kubectl delete ns -l name="redis"
+kubectl create ns "$NS"
+kubectl label ns "$NS" name="redis"
+
 kubectl get redisversions
-# Example provided in documentation is broken;
-# https://github.com/kubedb/docs/raw/v0.13.0-rc.0/docs/examples/redis/quickstart/demo-1.yaml
-kubectl apply -f demo.yaml
+kubectl apply -f $DIR/manifest/redis-cluster.yaml
 kubedb get rd -n demo
 
 kubectl exec -it redis-quickstart-0 -n demo sh
