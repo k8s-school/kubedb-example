@@ -10,5 +10,6 @@ before_script:
   - ./kind-travis-ci/kind/k8s-create.sh -s
 
 script:
-  - ./install.sh
-  - ./test.sh
+  - ./install-kubedb.sh
+  - ./install-redis.sh
+  - ./test-redis.sh
