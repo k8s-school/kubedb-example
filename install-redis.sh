@@ -16,10 +16,17 @@ kubectl label ns "$NS" name="redis"
 
 kubectl get redisversions
 kubectl apply -f $DIR/manifest/redis-cluster.yaml
-sleep 2
-for i in O .. 2
+
+while true
 do
-  kubectl wait --for=condition=Ready pod -n demo -l kubedb.com/kind=Redis,kubedb.com/name=redis-cluster,redis.kubedb.com/shard="$i"
+    sleep 2
+    STATUS=$(kubectl get redis -n $NS redis-cluster -o jsonpath="{.status.phase}")
+    if [ "$STATUS" = "Running" ]; then
+        break
+    fi
 done
+
+kubectl wait --for=condition=Ready pod -n demo -l kubedb.com/kind=Redis,kubedb.com/name=redis-cluster
+
 kubedb get redis -n demo
 kubedb get all -n demo
