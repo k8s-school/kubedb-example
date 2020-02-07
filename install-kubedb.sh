@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Install kubedb and then, a redis cluster
+# Install kubedb
 
 set -euxo pipefail
 
@@ -20,15 +20,3 @@ kubectl get crd -l app=kubedb
 wget -O kubedb https://github.com/kubedb/cli/releases/download/$KUBEDB_VERSION/kubedb-linux-amd64 \
   && chmod +x kubedb \
   && sudo mv kubedb /usr/local/bin/
-
-# See https://kubedb.com/docs/v0.13.0-rc.0/guides/redis/clustering/redis-cluster/
-
-kubectl delete ns -l name="redis"
-kubectl create ns "$NS"
-kubectl label ns "$NS" name="redis"
-
-kubectl get redisversions
-kubectl apply -f $DIR/manifest/redis-cluster.yaml
-kubedb get rd -n demo
-
-kubectl exec -it redis-quickstart-0 -n demo sh

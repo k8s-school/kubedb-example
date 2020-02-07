@@ -1,6 +1,6 @@
 [<img src="http://k8s-school.fr/images/logo.svg" alt="K8s-school Logo, expertise et formation Kubernetes" height="50" />](https://k8s-school.fr)
 
-[![Build Status](https://travis-ci.org/k8s-school/kubedb-example.svg?branch=master)](https://travis-ci.org/k8s-school/kubedb-example)
+[![Build Status](https://travis-ci.com/k8s-school/kubedb-example.svg?branch=master)](https://travis-ci.com/k8s-school/kubedb-example)
 
 # kubedb-example
 
@@ -13,7 +13,8 @@ Set-up a Kubernetes cluster and its related kubeconfig file, and then:
 ```bash
 git clone https://github.com/k8s-school/kubedb-example.git
 cd kubedb-example
-./install.sh
+./install-kubedb.sh
+./install-redis.sh
 kubectl get redis -n demo
 kubectl get pods -n demo
 ```
