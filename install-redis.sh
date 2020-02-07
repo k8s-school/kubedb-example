@@ -17,6 +17,9 @@ kubectl label ns "$NS" name="redis"
 kubectl get redisversions
 kubectl apply -f $DIR/manifest/redis-cluster.yaml
 sleep 2
-kubectl wait --for=condition=Ready pod -n demo -l kubedb.com/kind=Redis,kubedb.com/name=redis-cluster
+for i in O .. 2
+do
+  kubectl wait --for=condition=Ready pod -n demo -l kubedb.com/kind=Redis,kubedb.com/name=redis-cluster,redis.kubedb.com/shard="$i"
+done
 kubedb get redis -n demo
 kubedb get all -n demo

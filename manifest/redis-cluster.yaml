@@ -17,6 +17,6 @@ spec:
     storageClassName: "standard"
     accessModes:
     - ReadWriteOnce
-  terminationPolicy: Pause
+  terminationPolicy: Terminate 
   updateStrategy:
     type: RollingUpdate
