@@ -28,5 +28,5 @@ done
 
 kubectl wait --for=condition=Ready pod -n demo -l kubedb.com/kind=Redis,kubedb.com/name=redis-cluster
 
-kubedb get redis -n demo
-kubedb get all -n demo
+kubectl get redis -n demo
+kubectl get all -n demo
